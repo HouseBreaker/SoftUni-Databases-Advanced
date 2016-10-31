@@ -1,4 +1,4 @@
-namespace _03.Introduction_to_Entity_Framework.Models
+namespace _03.Introduction_to_Entity_Framework.SoftUniContext
 {
 	using System;
 	using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace _03.Introduction_to_Entity_Framework.Models
 		)]
 		public Project()
 		{
-			Employees = new HashSet<Employee>();
+			this.Employees = new HashSet<Employee>();
 		}
 
 		public int ProjectID { get; set; }

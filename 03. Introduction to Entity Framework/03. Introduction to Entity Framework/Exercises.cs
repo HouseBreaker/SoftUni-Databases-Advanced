@@ -4,25 +4,77 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
-using _03.Introduction_to_Entity_Framework.Models;
 
 namespace _03.Introduction_to_Entity_Framework
 {
+	using _03.Introduction_to_Entity_Framework.SoftUniContext;
+
 	static class Exercises
 	{
 		[STAThread]
 		private static void Main()
 		{
 			Thread.CurrentThread.CurrentCulture = CultureInfo.GetCultureInfo("en-US");
-			var context = new SoftUniContext();
-
-			var result = P15_FindLatest10Projects(context);
+			var softUniContext = new SoftUniContext.SoftUniContext();
+			var gringottsContext = new GringottsContext.GringottsContext();
+			var result = P19_FirstLetter(gringottsContext);
 
 			Console.WriteLine(result);
 			Clipboard.SetText(result);
 		}
 
-		private static string P15_FindLatest10Projects(SoftUniContext context)
+		private static string P19_FirstLetter(GringottsContext.GringottsContext context)
+		{
+			var result = new StringBuilder();
+
+			var wizardLetters = context.WizzardDeposits
+				.Where(a => a.DepositGroup == "Troll Chest")
+				.Select(a => a.FirstName.Substring(0, 1))
+				.Distinct()
+				.OrderBy(a => a)
+				.ToArray();
+
+			result.Append(string.Join(Environment.NewLine, wizardLetters));
+
+			return result.ToString();
+		}
+
+		private static string P18_FindEmployeesByFirstNameStartingWithSa(SoftUniContext.SoftUniContext context)
+		{
+			var result = new StringBuilder();
+
+			var employees = context.Employees
+				.Where(e => e.FirstName.Substring(0, 2).Equals("SA", StringComparison.OrdinalIgnoreCase))
+				.ToArray();
+
+			foreach (var employee in employees)
+			{
+				result.AppendLine($"{employee.FirstName} {employee.LastName} - {employee.JobTitle} - (${employee.Salary:F4})");
+			}
+
+			return result.ToString();
+		}
+
+		private static string P16_IncreaseSalaries(SoftUniContext.SoftUniContext context)
+		{
+			var result = new StringBuilder();
+
+			var correctDepartments = new[] {"Engineering", "Tool Design", "Marketing", "Information Services"};
+
+			var employees = context.Employees.Where(e => correctDepartments.Contains(e.Department.Name));
+
+			foreach (var employee in employees)
+			{
+				employee.Salary *= 1.12m;
+				result.AppendLine($"{employee.FirstName} {employee.LastName} (${employee.Salary})");
+			}
+
+			context.SaveChanges();
+
+			return result.ToString();
+		}
+
+		private static string P15_FindLatest10Projects(SoftUniContext.SoftUniContext context)
 		{
 			var result = new StringBuilder();
 
@@ -40,7 +92,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result.ToString();
 		}
 
-		private static string P11_DepartmentsWithMoreThan5Employees(SoftUniContext context)
+		private static string P11_DepartmentsWithMoreThan5Employees(SoftUniContext.SoftUniContext context)
 		{
 			var result = new StringBuilder();
 
@@ -59,7 +111,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result.ToString();
 		}
 
-		private static string P10_EmployeeWithId147(SoftUniContext context)
+		private static string P10_EmployeeWithId147(SoftUniContext.SoftUniContext context)
 		{
 			var result = new StringBuilder();
 
@@ -73,7 +125,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result.ToString();
 		}
 
-		private static string P09_AddressesByTownName(SoftUniContext context)
+		private static string P09_AddressesByTownName(SoftUniContext.SoftUniContext context)
 		{
 			var result = new StringBuilder();
 
@@ -90,7 +142,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result.ToString();
 		}
 
-		private static string P08_FindEmployeesInPeriod(SoftUniContext context)
+		private static string P08_FindEmployeesInPeriod(SoftUniContext.SoftUniContext context)
 		{
 			var employees =
 				context.Employees
@@ -111,7 +163,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result.ToString();
 		}
 
-		private static string P07_DeleteProjectById(SoftUniContext context)
+		private static string P07_DeleteProjectById(SoftUniContext.SoftUniContext context)
 		{
 			var project = context.Projects.Find(2);
 
@@ -128,7 +180,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result;
 		}
 
-		private static string P06_AddNewAddressAndUpdateEmployee(SoftUniContext context)
+		private static string P06_AddNewAddressAndUpdateEmployee(SoftUniContext.SoftUniContext context)
 		{
 			var newAddress = new Address()
 			{
@@ -146,7 +198,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result;
 		}
 
-		private static string P05_EmployeesFromSeattle(SoftUniContext context)
+		private static string P05_EmployeesFromSeattle(SoftUniContext.SoftUniContext context)
 		{
 			var employees = context.Employees
 				.Where(e => e.Department.Name == "Research and Development").OrderBy(e => e.Salary)
@@ -163,7 +215,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result.ToString();
 		}
 
-		private static string P04_EmployeesWithSalaryOver50000(SoftUniContext context)
+		private static string P04_EmployeesWithSalaryOver50000(SoftUniContext.SoftUniContext context)
 		{
 			var employeesWithHighSalary = context.Employees.Where(e => e.Salary > 50000).Select(e => e.FirstName).ToArray();
 
@@ -171,7 +223,7 @@ namespace _03.Introduction_to_Entity_Framework
 			return result;
 		}
 
-		private static string P03_GetEmployeesFullInformation(SoftUniContext context)
+		private static string P03_GetEmployeesFullInformation(SoftUniContext.SoftUniContext context)
 		{
 			var employees = context.Employees.ToArray();
 

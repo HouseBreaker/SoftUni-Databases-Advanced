@@ -1,27 +1,23 @@
-namespace _03.Introduction_to_Entity_Framework.Models
+namespace _03.Introduction_to_Entity_Framework.SoftUniContext
 {
 	using System.Collections.Generic;
 	using System.ComponentModel.DataAnnotations;
 
-	public partial class Department
+	public partial class Town
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Department()
+        public Town()
         {
-            Employees = new HashSet<Employee>();
+            this.Addresses = new HashSet<Address>();
         }
 
-        public int DepartmentID { get; set; }
+        public int TownID { get; set; }
 
         [Required]
         [StringLength(50)]
         public string Name { get; set; }
 
-        public int ManagerID { get; set; }
-
-        public virtual Employee Manager { get; set; }
-
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Address> Addresses { get; set; }
     }
 }

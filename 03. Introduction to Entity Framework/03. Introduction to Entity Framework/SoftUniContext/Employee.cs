@@ -1,4 +1,4 @@
-namespace _03.Introduction_to_Entity_Framework.Models
+namespace _03.Introduction_to_Entity_Framework.SoftUniContext
 {
 	using System;
 	using System.Collections.Generic;
@@ -10,9 +10,9 @@ namespace _03.Introduction_to_Entity_Framework.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
-            Departments = new HashSet<Department>();
-            Managers = new HashSet<Employee>();
-            Projects = new HashSet<Project>();
+            this.Departments = new HashSet<Department>();
+            this.Managers = new HashSet<Employee>();
+            this.Projects = new HashSet<Project>();
         }
 
         public int EmployeeID { get; set; }

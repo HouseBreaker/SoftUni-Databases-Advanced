@@ -1,4 +1,4 @@
-namespace _03.Introduction_to_Entity_Framework.Models
+namespace _03.Introduction_to_Entity_Framework.SoftUniContext
 {
 	using System.Data.Entity;
 

@@ -55,19 +55,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\Address.cs" />
-    <Compile Include="Models\Department.cs" />
-    <Compile Include="Models\Employee.cs" />
+    <Compile Include="GringottsContext\GringottsContext.cs" />
+    <Compile Include="GringottsContext\WizzardDeposit.cs" />
+    <Compile Include="SoftUniContext\Address.cs" />
+    <Compile Include="SoftUniContext\Department.cs" />
+    <Compile Include="SoftUniContext\Employee.cs" />
     <Compile Include="Exercises.cs" />
-    <Compile Include="Models\Project.cs" />
+    <Compile Include="SoftUniContext\Project.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\SoftUniContext.cs" />
-    <Compile Include="Models\Town.cs" />
+    <Compile Include="SoftUniContext\SoftUniContext.cs" />
+    <Compile Include="SoftUniContext\Town.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
